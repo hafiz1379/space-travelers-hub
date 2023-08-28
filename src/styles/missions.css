@@ -1,0 +1,6 @@
+.missions__container {
+  display: flex;
+  max-width: 1300px;
+  width: 90vw;
+  margin: auto;
+}
