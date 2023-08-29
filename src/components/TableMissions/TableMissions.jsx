@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import Badge from 'react-bootstrap/Badge';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMissions, joinMission, leaveMission } from '../../redux/missions/missions-slice';
 import './TableMissions.css';
@@ -38,8 +39,14 @@ const TableMissions = () => {
           <tr key={mission.mission_id} id={mission.mission_id}>
             <td>{mission.mission_name}</td>
             <td>{mission.description}</td>
-            <td className="align-middle"><button className="btn-member" type="button">Not a Member</button></td>
-            <td className="align-middle"><Button className="btn-join" variant="outline-secondary" onClick={() => handleUpdateStore(mission.mission_id)}>Join Mission</Button></td>
+            <td className="align-middle">
+              <Badge pill bg={mission.reserved ? 'success' : 'secondary'}>{mission.reserved ? 'Active Member' : 'NOT A MEMBER' }</Badge>
+            </td>
+            <td className="align-middle">
+              <Button className="btn-join" variant={mission.reserved ? 'outline-danger' : 'outline-secondary'} onClick={() => handleUpdateStore(mission.mission_id)}>
+                {mission.reserved ? 'Leave Mission' : 'Join Mission'}
+              </Button>
+            </td>
           </tr>
         ))}
       </tbody>
