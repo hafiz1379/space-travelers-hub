@@ -1,15 +1,4 @@
-.btn-member {
-  background-color: grey;
-  color: #fff;
-  font-weight: 600;
-  width: 100px;
-  height: 27px;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.8rem;
-}
-
 .btn-join {
-  width: 120px;
+  width: 125px;
   height: 40px;
 }
