@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Header from './components/header';
 import RocketsPage from './pages/rockets';
@@ -9,6 +9,8 @@ import Profile from './pages/profile';
 
 function App() {
   const dispatch = useDispatch();
+  const state = useSelector((state) => state.rockets.rockets);
+
   useEffect(() => {
     dispatch(fetchRockets());
   }, [dispatch]);
@@ -20,7 +22,7 @@ function App() {
       </header>
       <main className="container my-3">
         <Routes>
-          <Route path="/" element={<RocketsPage />} />
+          <Route path="/" element={<RocketsPage state={state} />} />
           <Route path="/missions" element={<Missions />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
