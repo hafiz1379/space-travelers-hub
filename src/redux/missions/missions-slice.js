@@ -16,10 +16,27 @@ const initialState = {
   missions: [],
 };
 
-const missionSlider = createSlice({
-  name: 'missions',
+const missionSlice = createSlice({
+  name: 'mission',
   initialState,
-  reducers: {},
+  reducers: {
+    joinMission: (state, action) => {
+      const missionId = action.payload;
+      const updateMissions = state.missions.map((mission) => {
+        if (mission.mission_id !== missionId) return mission;
+        return { ...mission, reserved: true };
+      });
+      return { ...state, missions: updateMissions };
+    },
+    leaveMission: (state, action) => {
+      const missionId = action.payload;
+      const updateMissions = state.missions.map((mission) => {
+        if (mission.mission_id !== missionId) return mission;
+        return { ...mission, reserved: false };
+      });
+      return { ...state, missions: updateMissions };
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getMissions.fulfilled, (state, action) => ({
       ...state,
@@ -32,4 +49,6 @@ const missionSlider = createSlice({
   },
 });
 
-export default missionSlider.reducer;
+export const { joinMission, leaveMission } = missionSlice.actions;
+
+export default missionSlice.reducer;
