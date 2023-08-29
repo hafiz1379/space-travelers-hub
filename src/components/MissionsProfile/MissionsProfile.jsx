@@ -9,11 +9,15 @@ const MissionsProfile = () => {
   return (
     <ListGroup style={{ width: '42%' }}>
       <h2>My Missions</h2>
-      {filteredMissions.map((mission) => (
-        <ListGroup.Item style={{ padding: '15px' }} key={mission.mission_id}>
-          {mission.mission_name}
-        </ListGroup.Item>
-      ))}
+      {filteredMissions.length > 0 ? (
+        filteredMissions.map((mission) => (
+          <ListGroup.Item style={{ padding: '15px' }} key={mission.mission_id}>
+            {mission.mission_name}
+          </ListGroup.Item>
+        ))
+      ) : (
+        <h4 style={{ marginTop: '3rem', color: '#0d6efd', fontSize: '2rem' }}>No missions joined</h4>
+      )}
     </ListGroup>
   );
 };
