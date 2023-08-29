@@ -1,7 +1,8 @@
+import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { reserveRocket } from '../../redux/rockets/rockets-slice';
+import { reserveRocket, cancelRocket } from '../../redux/rockets/rockets-slice';
 
 const RocketCard = ({ rocketProps }) => {
   const dispatch = useDispatch();
@@ -17,6 +18,10 @@ const RocketCard = ({ rocketProps }) => {
     dispatch(reserveRocket(id));
   };
 
+  const handleCancelRocket = () => {
+    dispatch(cancelRocket(id));
+  };
+
   return (
     <Card>
       <div className="row">
@@ -30,11 +35,15 @@ const RocketCard = ({ rocketProps }) => {
               {description}
             </Card.Text>
             {!reserved && (
-            <Button variant="outline-primary" onClick={handleReserveRocket}>
-              Reserve Rocket
-            </Button>
+              <Button variant="outline-primary" onClick={handleReserveRocket}>
+                Reserve Rocket
+              </Button>
             )}
-            {reserved && <p>Rocket reserved!</p>}
+            {reserved && (
+              <Button variant="outline-danger" onClick={handleCancelRocket}>
+                Cancel Booking
+              </Button>
+            )}
           </Card.Body>
         </div>
       </div>
