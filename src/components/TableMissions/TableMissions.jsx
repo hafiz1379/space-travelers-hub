@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMissions } from '../../redux/missions/missions-slice';
+import { getMissions, joinMission, leaveMission } from '../../redux/missions/missions-slice';
 import './TableMissions.css';
 
 const TableMissions = () => {
@@ -10,9 +10,19 @@ const TableMissions = () => {
   const { missions } = useSelector((state) => state.missions);
 
   useEffect(() => {
-    dispatch(getMissions());
-  }, [dispatch]);
+    if (missions.length === 0) {
+      dispatch(getMissions());
+    }
+  });
 
+  const handleUpdateStore = (id) => {
+    const selectedMission = missions.find((mission) => mission.mission_id === id);
+    if (selectedMission.reserved) {
+      dispatch(leaveMission(id));
+    } else {
+      dispatch(joinMission(id));
+    }
+  };
   return (
     <Table striped bordered>
       <thead>
@@ -29,7 +39,7 @@ const TableMissions = () => {
             <td>{mission.mission_name}</td>
             <td>{mission.description}</td>
             <td className="align-middle"><button className="btn-member" type="button">Not a Member</button></td>
-            <td className="align-middle"><Button className="btn-join" variant="outline-secondary">Join Mission</Button></td>
+            <td className="align-middle"><Button className="btn-join" variant="outline-secondary" onClick={() => handleUpdateStore(mission.mission_id)}>Join Mission</Button></td>
           </tr>
         ))}
       </tbody>
